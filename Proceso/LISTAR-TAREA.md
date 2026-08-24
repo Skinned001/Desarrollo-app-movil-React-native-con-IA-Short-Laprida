@@ -20,20 +20,6 @@
 
 ---
 
-### Promt inicial
-
-"Hola. Vamos a iniciar el desarrollo de la app siguiendo la metodología SDD.
-
-Primero, lee detenidamente los archivos .clinerules y SPEC.md. Confírmame que entendiste las reglas (especialmente la prohibición de usar backend real).
-
-Una vez que lo leas, empezá a crear la estructura base del proyecto para expo-router (carpeta app, \_layout.tsx, etc.).
-
-Creá un archivo de "mocks" con datos falsos de 3 o 4 anomalías SCP para poder probar la app.
-
-Desarrollá la primera historia de usuario (HU1): la pantalla del catálogo (index.tsx) que muestre la lista de SCPs usando los mocks.
-
-Ve paso a paso. Mostrame qué archivos vas a crear o modificar."
-
 ## T02: Crear servicio de mocks (scpService)
 
 - **T02.1:** Crear la carpeta `services`.
@@ -52,40 +38,6 @@ Ve paso a paso. Mostrame qué archivos vas a crear o modificar."
 - **T02.14:** Eliminar el archivo temporal.
 
 ---
-
-### Promt inicial
-
-Estamos desarrollando una app de catálogo SCP con React Native, Expo y TypeScript.
-
-Ya tenemos la T01 completada:
-
-- La interfaz `SCPEntity` está definida en `/types/scp.ts` con los campos: `id`, `ItemNumber`, `Class`, `ContainmentProcedures`, `Description`.
-- El array inicial de mocks está en `/constants/scpData.ts` con al menos 5 SCPs de ejemplo.
-
-Ahora necesito que implementes la T02: crear el servicio de mocks en `/services/scpService.ts`.
-
-Requisitos:
-
-1. El archivo debe estar en `services/scpService.ts`.
-2. Debe exportar las siguientes funciones **async**:
-   - `getAllSCPs(): Promise<SCPEntity[]>`
-   - `getSCPById(id: string): Promise<SCPEntity | undefined>`
-   - `createSCP(scp: Omit<SCPEntity, 'id'>): Promise<SCPEntity>`
-   - `updateSCP(id: string, scp: Partial<SCPEntity>): Promise<SCPEntity>`
-   - `deleteSCP(id: string): Promise<void>`
-3. Cada función debe simular latencia de red con `await new Promise(resolve => setTimeout(resolve, 500))` (500ms).
-4. Los datos deben leerse y modificarse **en memoria** a partir del array importado de `constants/scpData.ts`.
-   - `getAllSCPs` devuelve una copia del array.
-   - `getSCPById` busca por `id`.
-   - `createSCP` genera un nuevo `id` (puede ser `Date.now().toString()` o un contador) y añade el elemento al array.
-   - `updateSCP` busca el elemento por `id` y actualiza sus campos (usando spread).
-   - `deleteSCP` filtra el array eliminando el elemento con ese `id`.
-5. Los nombres de las funciones y variables deben estar en **inglés**. Los comentarios deben estar en **español**.
-6. Maneja errores básicos: si en `getSCPById` no encuentra el id, debe devolver `undefined` (no lanzar error). En `updateSCP` y `deleteSCP`, si no encuentra el id, lanza un error con `throw new Error('SCP no encontrado')`.
-
-Asegúrate de importar correctamente los tipos y los datos iniciales desde sus respectivos archivos.
-
-Genera únicamente el código de `scpService.ts` y explícame brevemente cómo funciona.
 
 ## T03: Crear Contexto global (SCPContext)
 
