@@ -1,6 +1,6 @@
 # Plan Técnico - App Fundacion SCP
 
-## promt utilizado para generacion del plan
+## promt utilizado para generar el archivo plan.md
 
 En base a lo el pdf dice y de como te digimos que seria la aplicacion podrias hacer un archivo llamado plan.md
 
