@@ -1,42 +1,101 @@
-# Especificación de Proyecto: Catálogo de Anomalías SCP
+# Especificación del Proyecto: App Catálogo SCP
 
-## Visión General
-Aplicación móvil estilo catálogo para visualizar, registrar y editar anomalías de la Fundación SCP. El sistema está pensado para investigadores en campo. 
-La interfaz debe tener una estética limpia, técnica y realista (estilo base de datos clasificada o terminal oscura). 
-Los datos se manejarán estrictamente en memoria (mocks) sin conexión a un backend real.
+## 1. Descripción General
+El proyecto "Catálogo SCP" es una aplicación móvil diseñada para listar, visualizar detalles, crear y editar registros de entidades SCP (Secure, Contain, Protect). La aplicación simula una conexión a una base de datos mediante un servicio de mocks con latencia, permitiendo a los usuarios interactuar con un listado de entidades clasificadas.
 
-## 1. Historias de Usuario
+## 2. Stack Tecnológico
+- **Framework:** React Native
+- **Herramienta de desarrollo:** Expo
+- **Lenguaje:** TypeScript
+- **Navegación:** Expo Router
+- **Manejo de Estado Global:** React Context API
 
-*   **HU1 - Catálogo Principal:** Como Investigador, quiero ver una lista de todos los SCPs registrados y buscar por número de ítem, para encontrar anomalías rápidamente.
-*   **HU2 - Detalles de Anomalía:** Como Investigador, quiero entrar a un registro específico para leer sus "Procedimientos Especiales de Contención" y su "Descripción" detallada.
-*   **HU3 - Registro de Anomalía:** Como Administrador de Datos, quiero un formulario para ingresar un nuevo SCP al sistema.
-*   **HU4 - Edición de Registro:** Como Administrador de Datos, quiero poder editar la información de un SCP existente por si los protocolos de contención cambian.
+## 3. Estructura de Datos (Modelos)
 
-## 2. Pantallas (Arquitectura expo-router)
+### Entidad SCP (`SCPEntity`)
+Representa la estructura fundamental de cada registro en el catálogo.
 
-*   `/(tabs)/index` **(CatalogScreen):** Pantalla principal. Muestra la lista completa de SCPs en tarjetas y una barra de búsqueda en la parte superior. Un botón flotante (FAB) para "Agregar nuevo".
-*   `/[id]` **(DetailScreen):** Pantalla de lectura. Muestra toda la información del SCP seleccionado. Incluye un botón en el header para "Editar".
-*   `/create` **(CreateScreen):** Pantalla con un formulario vacío para dar de alta una nueva anomalía.
-*   `/edit/[id]` **(EditScreen):** Misma estructura que el formulario de creación, pero con los campos pre-llenados con la información del SCP actual.
+| Campo | Tipo | Descripción |
+| :--- | :--- | :--- |
+| `id` | `string` | Identificador único de la entidad. |
+| `ItemNumber` | `string` | Número de designación oficial (ej. SCP-173). |
+| `Class` | `enum` | Clasificación de la entidad (`Safe`, `Euclid`, `Keter`, `Thaumiel`). |
+| `ContainmentProcedures` | `string` | Procedimientos especiales de contención. |
+| `Description` | `string` | Descripción detallada de la entidad y sus propiedades. |
 
-## 3. Criterios de Aceptación
+## 4. Requerimientos Funcionales y Fases de Desarrollo
 
-### Para HU1 (Catálogo):
-*   La lista debe mostrar al menos: Número de ítem (ej. SCP-173), Clase (Safe, Euclid, Keter) y un extracto corto de la descripción.
-*   La barra de búsqueda debe filtrar la lista en tiempo real escribiendo el número de SCP o palabras clave.
+El desarrollo se divide en las siguientes fases (T01 a T10), con un orden estricto de ejecución. **Cada tarea debe completarse y probarse en un dispositivo (ej. mediante Expo Go) antes de avanzar a la siguiente.**
 
-### Para HU2 (Detalles):
-*   Debe mostrar claramente separados los títulos: "Ítem #", "Clase de Objeto", "Procedimientos Especiales de Contención" y "Descripción".
-*   El texto debe ser scrolleable si es muy largo.
+### T01: Configuración de Tipos y Datos Simulados (Mocks)
+**Objetivo:** Establecer la base de datos local y los tipos de TypeScript.
+- Crear directorio `types` y definir la interfaz `SCPEntity` en `types/scp.ts`.
+- Crear directorio `constants` y establecer los datos iniciales en `constants/scpData.ts` (mínimo 5 registros SCP).
+- Implementar script temporal para verificar la correcta estructuración de los datos en consola.
 
-### Para HU3 y HU4 (Formularios de Creación/Edición):
-*   Campos obligatorios: `ItemNumber` (texto), `Class` (Selector/Dropdown: Safe, Euclid, Keter, Thaumiel), `ContainmentProcedures` (área de texto multilinea), `Description` (área de texto multilinea).
-*   Si se intenta guardar con campos obligatorios vacíos, debe mostrar un mensaje de error visual (texto en rojo).
-*   Al guardar exitosamente, el estado global/mock debe actualizarse, y la app debe navegar automáticamente de regreso a la pantalla anterior.
+### T02: Servicio de Datos (scpService)
+**Objetivo:** Simular un backend con operaciones CRUD y latencia artificial.
+- Crear directorio `services` y el archivo `services/scpService.ts`.
+- Implementar funciones con retraso (ej. 500ms) para: `getAllSCPs`, `getSCPById`, `createSCP`, `updateSCP` y `deleteSCP`.
+- Manejar posibles errores (ej. SCP no encontrado).
+- Validar las operaciones CRUD mediante pruebas temporales.
 
-## 4. Fuera de Alcance (Restricciones Estrictas)
+### T03: Manejo de Estado Global (SCPContext)
+**Objetivo:** Proveer los datos y el estado de la aplicación a todos los componentes.
+- Crear directorio `context` y el archivo `context/SCPContext.tsx`.
+- Definir el estado global (`scps`, `loading`, `error`).
+- Implementar funciones para recargar, crear, actualizar y eliminar entidades usando el `scpService`.
+- Exportar el proveedor (`SCPProvider`) y el hook (`useSCP`).
+- Envolver la aplicación en `app/_layout.tsx`.
 
-*   **NO Backend/Bases de datos:** No se implementará Firebase, Supabase, SQLite, ni ninguna API REST externa. Todo funciona con un estado en memoria o archivos `.json`.
-*   **NO Autenticación:** No habrá pantalla de Login ni sistema de roles (roles como "Investigador" o "Administrador" son solo contexto para las historias de usuario).
-*   **NO Subida de imágenes reales:** Las imágenes (si se incluyen) funcionarán pegando URLs de internet, no habrá acceso a la galería ni a la cámara del dispositivo.
-*   **NO Notificaciones:** El sistema de notificaciones push o alertas locales queda totalmente descartado.
+### T04 & T05: Pantalla Principal y Componente de Tarjeta
+**Objetivo:** Mostrar la lista de entidades disponibles.
+- **T04:** Crear la pantalla de catálogo (`app/(tabs)/index.tsx`). Consumir el `useSCP` para mostrar la lista usando `FlatList`. Manejar estados de carga, lista vacía y errores con opción de reintento.
+- **T05:** Crear el componente `components/SCPCard.tsx` para cada elemento de la lista. Mostrar `ItemNumber`, clase (con badge de color según clasificación) y un extracto (max. 100 caracteres) de la descripción. Implementar navegación al detalle.
+
+### T06: Pantalla de Detalle (DetailScreen)
+**Objetivo:** Mostrar la información completa de una entidad seleccionada.
+- Crear ruta dinámica `app/[id].tsx`.
+- Obtener el ID de los parámetros de ruta (`useLocalSearchParams`).
+- Mostrar estados de carga o mensaje de error si no existe.
+- Renderizar todos los campos de la entidad (`ItemNumber`, badge de `Class`, `ContainmentProcedures` y `Description`).
+- Proveer un botón de acceso a la pantalla de edición.
+
+### T07: Pantalla de Creación (CreateScreen)
+**Objetivo:** Permitir el registro de nuevas entidades SCP.
+- Crear ruta `app/create.tsx`.
+- Implementar formulario con campos: `ItemNumber` (texto), `Class` (selector: Safe, Euclid, Keter, Thaumiel), `ContainmentProcedures` (multilínea) y `Description` (multilínea).
+- Incluir validación de campos obligatorios con mensajes de error en la UI.
+- Conectar con la función `createSCP` del contexto.
+- Navegar hacia atrás tras una creación exitosa.
+
+### T08: Pantalla de Edición (EditScreen)
+**Objetivo:** Permitir la modificación de entidades existentes.
+- Crear ruta dinámica `app/edit/[id].tsx`.
+- Cargar los datos actuales de la entidad seleccionada en el formulario.
+- Validar las modificaciones y manejar errores.
+- Conectar con la función `updateSCP`.
+- Redirigir a la pantalla de detalle (`router.replace`) tras actualizar.
+
+### T09: Flujos de Navegación
+**Objetivo:** Asegurar una experiencia de usuario fluida entre pantallas.
+- Verificar el enrutamiento:
+  - Lista (`/`) -> Detalle (`/[id]`)
+  - Detalle (`/[id]`) -> Editar (`/edit/[id]`)
+  - Guardar edición -> Detalle actualizado (`/[id]`)
+  - Crear -> Lista (con la nueva entidad)
+- Asegurar el correcto funcionamiento del botón "Volver" (`router.back()`).
+
+### T10: Diseño y UI/UX (Estilo Terminal/Oscuro)
+**Objetivo:** Aplicar la identidad visual del proyecto.
+- Definir paleta de colores: Fondo negro, texto principal verde neón.
+- Asignar colores específicos a los badges de clases SCP.
+- Estandarizar márgenes, paddings y tipografía.
+- Estilizar elementos interactivos (botones, inputs).
+- Revisar consistencia visual en estados de carga, error y listados.
+
+## 5. Criterios de Aceptación
+- La aplicación compila sin errores en Expo Go.
+- El CRUD funciona completamente simulado localmente.
+- La navegación no presenta bloqueos ni estados inconsistentes.
+- La interfaz de usuario refleja el tema oscuro especificado.
