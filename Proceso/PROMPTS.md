@@ -34,3 +34,36 @@ T01.11: Eliminar el archivo temporal.
 Por favor, procede a crear y modificar los archivos correspondientes.
 
 # Segundo Prompt
+
+## A partir de ahora, los prompts abarcaran subtareas de forma mas controlada y fragmentda, para manejar y revisar el codigo de mejor manera.
+Vamos a comenzar con la Fase T02. Para asegurarme de que el código sea exacto, vamos a trabajar paso a paso.
+
+Sigue teniendo en cuenta las reglas de nuestro .github/copilot-instructions.md y la arquitectura del spec.md.
+
+Por favor, ejecuta única y exclusivamente las siguientes subtareas. No implementes el CRUD todavía. Solo quiero la estructura inicial del servicio:
+
+T02.1: Crear la carpeta services.
+
+T02.2: Crear el archivo services/scpService.ts.
+
+T02.3: Importar la interfaz SCPEntity desde nuestro archivo de tipos y la data de scpData desde constantes.
+
+T02.4: Crear una función auxiliar (ej. delay) que use Promesas y setTimeout para simular latencia de red (ej. 500ms).
+
+Escribe el código para estas tareas y detente. Avísame cuando esté listo.
+
+## Prompt para finalizar el testeo de la fase 2
+
+Para finalizar completamente la Fase T02, vamos a probar que la lógica y la latencia funcionen correctamente antes de pasar a la interfaz.
+
+Por favor, ejecuta las siguientes subtareas:
+
+T02.10: Crear un archivo temporal de prueba (ej. services/testService.ts).
+
+T02.11: En ese archivo, escribir una función autoejecutable o script que primero llame a getAllSCPs e imprima el resultado en consola, verificando que la latencia funcione.
+
+T02.12: En el mismo script, probar la creación de un nuevo SCP ficticio, luego actualizarlo, y finalmente eliminarlo, imprimiendo mensajes de éxito en cada paso.
+
+T02.13: Probar que el manejo de errores funciona intentando buscar (getSCPById) un ID que no exista y capturando el error (try/catch).
+
+Escribe el código de este archivo temporal y dime qué comando debo ejecutar en mi terminal para ver los resultados (por ejemplo, usando npx tsx o node). La subtarea T02.14 (eliminar el archivo) la haré yo manualmente una vez que confirme que todo funciona.
