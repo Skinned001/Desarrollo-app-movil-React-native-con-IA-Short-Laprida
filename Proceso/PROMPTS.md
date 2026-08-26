@@ -91,3 +91,9 @@ T03.9:Continuemos con la subface T03.9
 T03.10:ok todo parece esta bien ahora continuemos con la subface T03.10: Exportar SCPProvider y useSCP
 
 T03.11:ahora realiza la subface T03.11: Envolver la aplicación con SCPProvider en app/\_layout.tsx. ademas otra cosa que quiero que haga durante todo este proceso que estamos haciendo de realizar las face es que expliques que esta haciendo
+
+T03.12:bien ahora debes de hacer la siguiente subface la T03.12: Crear una pantalla temporal de prueba.
+
+T03.13:ahora hagamos la siguiente subface T03.13: Mostrar los SCPs desde el contexto.
+
+T03.14:bien ahora queda la ultima subface,realiza la T03.14

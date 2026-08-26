@@ -3,6 +3,7 @@ import {
   useContext,
   useCallback,
   useEffect,
+  useRef,
   useState,
   type PropsWithChildren,
 } from "react";
@@ -32,12 +33,18 @@ export function SCPProvider({ children }: PropsWithChildren) {
   const [scps, setScps] = useState<SCPEntity[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const simulateInitialLoadError = useRef(true);
 
   const reloadSCPs = useCallback(async (): Promise<void> => {
     setLoading(true);
     setError(null);
 
     try {
+      if (simulateInitialLoadError.current) {
+        simulateInitialLoadError.current = false;
+        throw new Error("Error de prueba al cargar los SCPs");
+      }
+
       const loadedSCPs = await getAllSCPs();
       setScps(loadedSCPs);
     } catch (caughtError) {
