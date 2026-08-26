@@ -97,3 +97,15 @@ T03.12:bien ahora debes de hacer la siguiente subface la T03.12: Crear una panta
 T03.13:ahora hagamos la siguiente subface T03.13: Mostrar los SCPs desde el contexto.
 
 T03.14:bien ahora queda la ultima subface,realiza la T03.14
+
+T04:bien parece que esta todo correcto ahora vamos con la siguiente face la 4 manteniendo todo las reglas que estuvimos haciendo con la 3
+
+las subfase T04.1,2,3 ya fueron creada tras la instalacion de expo go por eso no son mensionado en este archivo
+
+T04.4:ok bien realiza la subfase T04.4
+
+T04.5:bien ahora continuemos con la siguiente subface la T04.5 Agregar el indicador de carga.
+
+T04.6:todo esta bien,realiza la subface T04.6
+
+T04.7:para la siguiente subface T04.7 puedes ademas de añadir el error añadir un boton que permita mostrar una lista vacia para validar el mensaje de la anterio subface

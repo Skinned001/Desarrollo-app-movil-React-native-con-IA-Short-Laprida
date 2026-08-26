@@ -1,38 +1,74 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { Image } from "expo-image";
+import {
+  ActivityIndicator,
+  Platform,
+  Pressable,
+  StyleSheet,
+} from "react-native";
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import { HelloWave } from "@/components/hello-wave";
+import ParallaxScrollView from "@/components/parallax-scroll-view";
+import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed-view";
+import { Link } from "expo-router";
+import { useSCP } from "../../context/SCPContext";
 
 export default function HomeScreen() {
+  const { scps, loading, error, reloadSCPs } = useSCP();
+
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
+      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
       headerImage={
         <Image
-          source={require('@/assets/images/partial-react-logo.png')}
+          source={require("@/assets/images/partial-react-logo.png")}
           style={styles.reactLogo}
         />
-      }>
+      }
+    >
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Welcome!</ThemedText>
         <HelloWave />
       </ThemedView>
+      {loading && (
+        <ThemedView style={styles.loadingContainer}>
+          <ActivityIndicator color="#00FF00" size="large" />
+          <ThemedText>Cargando SCPs...</ThemedText>
+        </ThemedView>
+      )}
+      {!loading && error && (
+        <ThemedView style={styles.errorContainer}>
+          <ThemedText style={styles.errorText}>{error}</ThemedText>
+          <Pressable
+            accessibilityRole="button"
+            onPress={() => void reloadSCPs()}
+            style={styles.retryButton}
+          >
+            <ThemedText style={styles.retryButtonText}>REINTENTAR</ThemedText>
+          </Pressable>
+        </ThemedView>
+      )}
+      {!loading && !error && scps.length === 0 && (
+        <ThemedView style={styles.emptyContainer}>
+          <ThemedText>No hay SCPs registrados.</ThemedText>
+        </ThemedView>
+      )}
+      <ThemedView style={styles.stepContainer}>
+        <ThemedText>Registros SCP disponibles: {scps.length}</ThemedText>
+      </ThemedView>
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 1: Try it</ThemedText>
         <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
+          Edit{" "}
+          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText>{" "}
+          to see changes. Press{" "}
           <ThemedText type="defaultSemiBold">
             {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
+              ios: "cmd + d",
+              android: "cmd + m",
+              web: "F12",
             })}
-          </ThemedText>{' '}
+          </ThemedText>{" "}
           to open developer tools.
         </ThemedText>
       </ThemedView>
@@ -43,18 +79,22 @@ export default function HomeScreen() {
           </Link.Trigger>
           <Link.Preview />
           <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
+            <Link.MenuAction
+              title="Action"
+              icon="cube"
+              onPress={() => alert("Action pressed")}
+            />
             <Link.MenuAction
               title="Share"
               icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
+              onPress={() => alert("Share pressed")}
             />
             <Link.Menu title="More" icon="ellipsis">
               <Link.MenuAction
                 title="Delete"
                 icon="trash"
                 destructive
-                onPress={() => alert('Delete pressed')}
+                onPress={() => alert("Delete pressed")}
               />
             </Link.Menu>
           </Link.Menu>
@@ -68,9 +108,12 @@ export default function HomeScreen() {
         <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
         <ThemedText>
           {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
+          <ThemedText type="defaultSemiBold">
+            npm run reset-project
+          </ThemedText>{" "}
+          to get a fresh <ThemedText type="defaultSemiBold">app</ThemedText>{" "}
+          directory. This will move the current{" "}
+          <ThemedText type="defaultSemiBold">app</ThemedText> to{" "}
           <ThemedText type="defaultSemiBold">app-example</ThemedText>.
         </ThemedText>
       </ThemedView>
@@ -80,19 +123,46 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 8,
   },
   stepContainer: {
     gap: 8,
     marginBottom: 8,
   },
+  loadingContainer: {
+    alignItems: "center",
+    gap: 8,
+    marginBottom: 8,
+  },
+  emptyContainer: {
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  errorContainer: {
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  errorText: {
+    color: "#FF3333",
+  },
+  retryButton: {
+    borderColor: "#00FF00",
+    borderWidth: 1,
+    marginTop: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+  },
+  retryButtonText: {
+    color: "#00FF00",
+    fontWeight: "700",
+  },
   reactLogo: {
     height: 178,
     width: 290,
     bottom: 0,
     left: 0,
-    position: 'absolute',
+    position: "absolute",
   },
 });

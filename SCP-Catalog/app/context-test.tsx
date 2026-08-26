@@ -6,11 +6,13 @@ import {
   Text,
   View,
 } from "react-native";
+import { useState } from "react";
 
 import { useSCP } from "../context/SCPContext";
 
 export default function ContextTestScreen() {
   const { scps, loading, error, reloadSCPs } = useSCP();
+  const [showEmptyList, setShowEmptyList] = useState(false);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -32,12 +34,13 @@ export default function ContextTestScreen() {
         </View>
       )}
 
-      {!loading && !error && scps.length === 0 && (
+      {!loading && !error && (showEmptyList || scps.length === 0) && (
         <Text style={styles.stateText}>No hay SCPs registrados.</Text>
       )}
 
       {!loading &&
         !error &&
+        !showEmptyList &&
         scps.map((scp) => (
           <View key={scp.id} style={styles.record}>
             <Text style={styles.itemNumber}>{scp.ItemNumber}</Text>
@@ -45,6 +48,18 @@ export default function ContextTestScreen() {
             <Text style={styles.description}>{scp.Description}</Text>
           </View>
         ))}
+
+      {!loading && !error && (
+        <Pressable
+          accessibilityRole="button"
+          onPress={() => setShowEmptyList((currentValue) => !currentValue)}
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>
+            {showEmptyList ? "MOSTRAR SCPs" : "MOSTRAR LISTA VACÍA"}
+          </Text>
+        </Pressable>
+      )}
     </ScrollView>
   );
 }
