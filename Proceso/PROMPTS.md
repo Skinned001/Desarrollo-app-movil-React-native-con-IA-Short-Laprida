@@ -75,3 +75,7 @@ T03.1:Continua con fase 3 y unicamnete as hastas el punto 3.1 y para comprobar q
 T03.2:ok ahora continuemos con la T03.2
 
 T03.3:esta todo bien continua con la T03:3
+
+T03.4:continua ahora con la subfase T03.4
+
+T03.5:continuemos con T03.5:Implementar la carga inicial.
