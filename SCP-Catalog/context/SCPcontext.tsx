@@ -1,4 +1,6 @@
 import {
+  createContext,
+  useContext,
   useCallback,
   useEffect,
   useState,
@@ -6,6 +8,7 @@ import {
 } from "react";
 import {
   createSCP as createSCPService,
+  deleteSCP as deleteSCPService,
   getAllSCPs,
   updateSCP as updateSCPService,
   type NewSCPData,
@@ -22,6 +25,8 @@ export interface SCPContextType {
   updateSCP: (id: string, data: UpdateSCPData) => Promise<SCPEntity>;
   deleteSCP: (id: string) => Promise<void>;
 }
+
+export const SCPContext = createContext<SCPContextType | undefined>(undefined);
 
 export function SCPProvider({ children }: PropsWithChildren) {
   const [scps, setScps] = useState<SCPEntity[]>([]);
@@ -95,8 +100,46 @@ export function SCPProvider({ children }: PropsWithChildren) {
     }
   };
 
-  void createSCP;
-  void updateSCP;
+  const deleteSCP = async (id: string): Promise<void> => {
+    setLoading(true);
+    setError(null);
 
-  return children;
+    try {
+      await deleteSCPService(id);
+      setScps((currentSCPs) => currentSCPs.filter((scp) => scp.id !== id));
+    } catch (caughtError) {
+      const message =
+        caughtError instanceof Error
+          ? caughtError.message
+          : "No se pudo eliminar el SCP";
+      setError(message);
+      throw new Error(message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const contextValue: SCPContextType = {
+    scps,
+    loading,
+    error,
+    reloadSCPs,
+    createSCP,
+    updateSCP,
+    deleteSCP,
+  };
+
+  return (
+    <SCPContext.Provider value={contextValue}>{children}</SCPContext.Provider>
+  );
+}
+
+export function useSCP(): SCPContextType {
+  const context = useContext(SCPContext);
+
+  if (!context) {
+    throw new Error("useSCP debe utilizarse dentro de un SCPProvider");
+  }
+
+  return context;
 }

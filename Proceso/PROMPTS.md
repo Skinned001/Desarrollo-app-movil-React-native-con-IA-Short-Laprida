@@ -85,3 +85,9 @@ T03.6:bien parece esta todo en orden continuemos con la subface T03.6
 T03.7:ahora continuemos con la siguiente sub face -T03.7: Implementar createSCP.
 
 T03.8:continuemos con la siguiente el T03.8: Implementar updateSCP.
+
+T03.9:Continuemos con la subface T03.9
+
+T03.10:ok todo parece esta bien ahora continuemos con la subface T03.10: Exportar SCPProvider y useSCP
+
+T03.11:ahora realiza la subface T03.11: Envolver la aplicación con SCPProvider en app/\_layout.tsx. ademas otra cosa que quiero que haga durante todo este proceso que estamos haciendo de realizar las face es que expliques que esta haciendo
