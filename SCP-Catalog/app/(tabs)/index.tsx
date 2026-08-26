@@ -1,178 +1,98 @@
-import { Image } from "expo-image";
 import {
   ActivityIndicator,
   FlatList,
-  Platform,
   Pressable,
   StyleSheet,
 } from "react-native";
 
-import { HelloWave } from "@/components/hello-wave";
-import ParallaxScrollView from "@/components/parallax-scroll-view";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { Link } from "expo-router";
 import { useSCP } from "../../context/SCPContext";
 
 export default function HomeScreen() {
   const { scps, loading, error, reloadSCPs } = useSCP();
 
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
-      headerImage={
-        <Image
-          source={require("@/assets/images/partial-react-logo.png")}
-          style={styles.reactLogo}
-        />
-      }
-    >
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
+    <ThemedView style={styles.container}>
+      <ThemedText type="title">Catálogo SCP</ThemedText>
+      <ThemedText style={styles.totalCount}>
+        Total de entidades: {scps.length}
+      </ThemedText>
+
       {loading && (
-        <ThemedView style={styles.loadingContainer}>
+        <ThemedView style={styles.stateContainer}>
           <ActivityIndicator color="#00FF00" size="large" />
           <ThemedText>Cargando SCPs...</ThemedText>
         </ThemedView>
       )}
+
       {!loading && error && (
-        <ThemedView style={styles.errorContainer}>
+        <ThemedView style={styles.stateContainer}>
           <ThemedText style={styles.errorText}>{error}</ThemedText>
           <Pressable
             accessibilityRole="button"
             onPress={() => void reloadSCPs()}
-            style={styles.retryButton}
+            style={styles.button}
           >
-            <ThemedText style={styles.retryButtonText}>REINTENTAR</ThemedText>
+            <ThemedText style={styles.buttonText}>REINTENTAR</ThemedText>
           </Pressable>
         </ThemedView>
       )}
+
       {!loading && !error && scps.length === 0 && (
-        <ThemedView style={styles.emptyContainer}>
+        <ThemedView style={styles.stateContainer}>
           <ThemedText>No hay SCPs registrados.</ThemedText>
         </ThemedView>
       )}
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText>Registros SCP disponibles: {scps.length}</ThemedText>
-      </ThemedView>
-      {!loading && !error && scps.length > 0 && (
-        <ThemedView style={styles.listContainer}>
-          <FlatList
-            data={scps}
-            keyExtractor={(scp) => scp.id}
-            renderItem={({ item }) => (
-              <ThemedView style={styles.provisionalCard}>
-                <ThemedText style={styles.cardLabel}>REGISTRO SCP</ThemedText>
-                <ThemedText style={styles.cardItemNumber}>
-                  {item.ItemNumber}
-                </ThemedText>
-                <ThemedText style={styles.cardClass}>
-                  Clase: {item.Class}
-                </ThemedText>
-                <ThemedText style={styles.cardDescription}>
-                  {item.Description.slice(0, 100)}
-                  {item.Description.length > 100 ? "..." : ""}
-                </ThemedText>
-              </ThemedView>
-            )}
-            scrollEnabled={false}
-          />
-        </ThemedView>
-      )}
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText>{" "}
-          to see changes. Press{" "}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: "cmd + d",
-              android: "cmd + m",
-              web: "F12",
-            })}
-          </ThemedText>{" "}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction
-              title="Action"
-              icon="cube"
-              onPress={() => alert("Action pressed")}
-            />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert("Share pressed")}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert("Delete pressed")}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">
-            npm run reset-project
-          </ThemedText>{" "}
-          to get a fresh <ThemedText type="defaultSemiBold">app</ThemedText>{" "}
-          directory. This will move the current{" "}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{" "}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+      {!loading && !error && scps.length > 0 && (
+        <FlatList
+          contentContainerStyle={styles.listContainer}
+          data={scps}
+          keyExtractor={(scp) => scp.id}
+          renderItem={({ item }) => (
+            <ThemedView style={styles.provisionalCard}>
+              <ThemedText style={styles.cardLabel}>REGISTRO SCP</ThemedText>
+              <ThemedText style={styles.cardItemNumber}>
+                {item.ItemNumber}
+              </ThemedText>
+              <ThemedText style={styles.cardClass}>
+                Clase: {item.Class}
+              </ThemedText>
+              <ThemedText style={styles.cardDescription}>
+                {item.Description.slice(0, 100)}
+                {item.Description.length > 100 ? "..." : ""}
+              </ThemedText>
+            </ThemedView>
+          )}
+        />
+      )}
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
+  container: {
+    flex: 1,
+    padding: 24,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  totalCount: {
+    color: "#99FF99",
+    marginTop: 8,
   },
-  loadingContainer: {
+  stateContainer: {
     alignItems: "center",
-    gap: 8,
-    marginBottom: 8,
-  },
-  emptyContainer: {
-    alignItems: "center",
-    marginBottom: 8,
+    gap: 12,
+    paddingVertical: 24,
   },
   listContainer: {
-    marginBottom: 8,
+    gap: 8,
+    paddingVertical: 16,
   },
   provisionalCard: {
     borderColor: "#00FF00",
     borderWidth: 1,
     gap: 6,
-    marginBottom: 8,
     padding: 12,
   },
   cardLabel: {
@@ -194,29 +114,19 @@ const styles = StyleSheet.create({
     color: "#00FF00",
     fontSize: 15,
   },
-  errorContainer: {
-    alignItems: "center",
-    marginBottom: 8,
-  },
   errorText: {
     color: "#FF3333",
   },
-  retryButton: {
+  button: {
+    alignSelf: "flex-start",
     borderColor: "#00FF00",
     borderWidth: 1,
     marginTop: 12,
     paddingHorizontal: 16,
     paddingVertical: 10,
   },
-  retryButtonText: {
+  buttonText: {
     color: "#00FF00",
     fontWeight: "700",
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: "absolute",
   },
 });

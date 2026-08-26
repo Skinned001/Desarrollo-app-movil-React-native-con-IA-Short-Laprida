@@ -117,3 +117,17 @@ T04.9:Bien continuemos ahora con la Subface T04.9: Agregar la FlatList.
 T04.10:continua ahora con subfase T04.10
 
 T04.11:ok entiendo ahora bien entonce esta bien ahora realiza la siguiente subface - T04.11 Mostrar ItemNumber, Class y un extracto de los primeros 100 caracteres de Description.
+
+T04.12:continuemos con la ultima subfase la T04.12
+
+T05:bien vamos a continuar ahora con la fase T05: Componente SCPCard
+
+T05.2:ok entonce vamos por la siguiente la subfase T05.2
+
+T05.3:bien continuemos con la subfase T05.3: Definir las propiedades del componente.
+
+T05.4:bien ademas de continuar la siguiente fase -T05.4: Mostrar el número de ítem, quiero que saque las funciones que utilizamos de prueba en la anterio fase
+
+T05.5:ok entonces continuemos con la subfase - T05.5: Mostrar la clase.
+
+T05.6:continua ahora con la subfase T05.6: Crear el color correspondiente a cada clase

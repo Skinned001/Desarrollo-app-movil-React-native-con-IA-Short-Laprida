@@ -20,12 +20,8 @@ export default function RootLayout() {
   return (
     <SCPProvider>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack initialRouteName="context-test">
+        <Stack initialRouteName="(tabs)">
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen
-            name="context-test"
-            options={{ title: "Context Test" }}
-          />
           <Stack.Screen
             name="modal"
             options={{ presentation: "modal", title: "Modal" }}
