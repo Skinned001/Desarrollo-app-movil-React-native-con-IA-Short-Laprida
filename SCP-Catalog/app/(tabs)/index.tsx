@@ -7,6 +7,7 @@ import {
 
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
+import { SCPCard } from "../../components/SCPCard";
 import { useSCP } from "../../context/SCPContext";
 
 export default function HomeScreen() {
@@ -50,21 +51,7 @@ export default function HomeScreen() {
           contentContainerStyle={styles.listContainer}
           data={scps}
           keyExtractor={(scp) => scp.id}
-          renderItem={({ item }) => (
-            <ThemedView style={styles.provisionalCard}>
-              <ThemedText style={styles.cardLabel}>REGISTRO SCP</ThemedText>
-              <ThemedText style={styles.cardItemNumber}>
-                {item.ItemNumber}
-              </ThemedText>
-              <ThemedText style={styles.cardClass}>
-                Clase: {item.Class}
-              </ThemedText>
-              <ThemedText style={styles.cardDescription}>
-                {item.Description.slice(0, 100)}
-                {item.Description.length > 100 ? "..." : ""}
-              </ThemedText>
-            </ThemedView>
-          )}
+          renderItem={({ item }) => <SCPCard scp={item} />}
         />
       )}
     </ThemedView>
@@ -88,31 +75,6 @@ const styles = StyleSheet.create({
   listContainer: {
     gap: 8,
     paddingVertical: 16,
-  },
-  provisionalCard: {
-    borderColor: "#00FF00",
-    borderWidth: 1,
-    gap: 6,
-    padding: 12,
-  },
-  cardLabel: {
-    color: "#99FF99",
-    fontSize: 12,
-    fontWeight: "700",
-  },
-  cardItemNumber: {
-    color: "#00FF00",
-    fontSize: 18,
-    fontWeight: "700",
-  },
-  cardClass: {
-    color: "#FFFF00",
-    fontSize: 15,
-    fontWeight: "700",
-  },
-  cardDescription: {
-    color: "#00FF00",
-    fontSize: 15,
   },
   errorText: {
     color: "#FF3333",

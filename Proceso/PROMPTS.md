@@ -131,3 +131,11 @@ T05.4:bien ademas de continuar la siguiente fase -T05.4: Mostrar el número de �
 T05.5:ok entonces continuemos con la subfase - T05.5: Mostrar la clase.
 
 T05.6:continua ahora con la subfase T05.6: Crear el color correspondiente a cada clase
+
+T05.7:me equivo esta subfase debe de hacer primero T05.7: Mostrar los primeros 100 caracteres de la descripción.
+
+T05.8:bien ahora continuea con las siguiente subfase T05.8: Agregar la navegación con router.push()
+
+T05.9:ok tiene que seguir la siguiente subfases T05.9: Reemplazar la tarjeta provisional en index.tsx.
+
+T05.10 y la .11 son actividad de verificacion asi que no necesitan de un prompt

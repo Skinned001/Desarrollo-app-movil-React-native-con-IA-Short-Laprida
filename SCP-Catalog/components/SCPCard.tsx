@@ -1,18 +1,29 @@
 import type { SCPEntity, SCPClass } from "../types/scp";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text } from "react-native";
+import { useRouter, type Href } from "expo-router";
 
 export interface SCPCardProps {
   scp: SCPEntity;
 }
 
 export function SCPCard({ scp }: SCPCardProps) {
+  const router = useRouter();
+
   return (
-    <View style={styles.card}>
+    <Pressable
+      accessibilityRole="button"
+      onPress={() => router.push(`/${scp.id}` as Href)}
+      style={styles.card}
+    >
       <Text style={styles.itemNumber}>{scp.ItemNumber}</Text>
       <Text style={[styles.className, classStyles[scp.Class]]}>
         Clase: {scp.Class}
       </Text>
-    </View>
+      <Text style={styles.description}>
+        {scp.Description.slice(0, 100)}
+        {scp.Description.length > 100 ? "..." : ""}
+      </Text>
+    </Pressable>
   );
 }
 
@@ -45,5 +56,9 @@ const styles = StyleSheet.create({
   className: {
     fontSize: 15,
     fontWeight: "700",
+  },
+  description: {
+    color: "#00FF00",
+    fontSize: 15,
   },
 });
