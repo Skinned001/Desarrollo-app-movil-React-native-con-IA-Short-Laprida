@@ -109,3 +109,11 @@ T04.5:bien ahora continuemos con la siguiente subface la T04.5 Agregar el indica
 T04.6:todo esta bien,realiza la subface T04.6
 
 T04.7:para la siguiente subface T04.7 puedes ademas de añadir el error añadir un boton que permita mostrar una lista vacia para validar el mensaje de la anterio subface
+
+T04.8:Bien ahora continuemos con la subface - T04.8: Agregar el botón de reintento.
+
+T04.9:Bien continuemos ahora con la Subface T04.9: Agregar la FlatList.
+
+T04.10:continua ahora con subfase T04.10
+
+T04.11:ok entiendo ahora bien entonce esta bien ahora realiza la siguiente subface - T04.11 Mostrar ItemNumber, Class y un extracto de los primeros 100 caracteres de Description.

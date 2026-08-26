@@ -45,7 +45,10 @@ export default function ContextTestScreen() {
           <View key={scp.id} style={styles.record}>
             <Text style={styles.itemNumber}>{scp.ItemNumber}</Text>
             <Text style={styles.className}>Clase: {scp.Class}</Text>
-            <Text style={styles.description}>{scp.Description}</Text>
+            <Text style={styles.description}>
+              {scp.Description.slice(0, 100)}
+              {scp.Description.length > 100 ? "..." : ""}
+            </Text>
           </View>
         ))}
 

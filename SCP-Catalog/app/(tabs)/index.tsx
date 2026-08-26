@@ -1,6 +1,7 @@
 import { Image } from "expo-image";
 import {
   ActivityIndicator,
+  FlatList,
   Platform,
   Pressable,
   StyleSheet,
@@ -56,6 +57,30 @@ export default function HomeScreen() {
       <ThemedView style={styles.stepContainer}>
         <ThemedText>Registros SCP disponibles: {scps.length}</ThemedText>
       </ThemedView>
+      {!loading && !error && scps.length > 0 && (
+        <ThemedView style={styles.listContainer}>
+          <FlatList
+            data={scps}
+            keyExtractor={(scp) => scp.id}
+            renderItem={({ item }) => (
+              <ThemedView style={styles.provisionalCard}>
+                <ThemedText style={styles.cardLabel}>REGISTRO SCP</ThemedText>
+                <ThemedText style={styles.cardItemNumber}>
+                  {item.ItemNumber}
+                </ThemedText>
+                <ThemedText style={styles.cardClass}>
+                  Clase: {item.Class}
+                </ThemedText>
+                <ThemedText style={styles.cardDescription}>
+                  {item.Description.slice(0, 100)}
+                  {item.Description.length > 100 ? "..." : ""}
+                </ThemedText>
+              </ThemedView>
+            )}
+            scrollEnabled={false}
+          />
+        </ThemedView>
+      )}
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 1: Try it</ThemedText>
         <ThemedText>
@@ -139,6 +164,35 @@ const styles = StyleSheet.create({
   emptyContainer: {
     alignItems: "center",
     marginBottom: 8,
+  },
+  listContainer: {
+    marginBottom: 8,
+  },
+  provisionalCard: {
+    borderColor: "#00FF00",
+    borderWidth: 1,
+    gap: 6,
+    marginBottom: 8,
+    padding: 12,
+  },
+  cardLabel: {
+    color: "#99FF99",
+    fontSize: 12,
+    fontWeight: "700",
+  },
+  cardItemNumber: {
+    color: "#00FF00",
+    fontSize: 18,
+    fontWeight: "700",
+  },
+  cardClass: {
+    color: "#FFFF00",
+    fontSize: 15,
+    fontWeight: "700",
+  },
+  cardDescription: {
+    color: "#00FF00",
+    fontSize: 15,
   },
   errorContainer: {
     alignItems: "center",
