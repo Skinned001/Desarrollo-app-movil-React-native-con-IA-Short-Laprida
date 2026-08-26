@@ -79,3 +79,9 @@ T03.3:esta todo bien continua con la T03:3
 T03.4:continua ahora con la subfase T03.4
 
 T03.5:continuemos con T03.5:Implementar la carga inicial.
+
+T03.6:bien parece esta todo en orden continuemos con la subface T03.6
+
+T03.7:ahora continuemos con la siguiente sub face -T03.7: Implementar createSCP.
+
+T03.8:continuemos con la siguiente el T03.8: Implementar updateSCP.

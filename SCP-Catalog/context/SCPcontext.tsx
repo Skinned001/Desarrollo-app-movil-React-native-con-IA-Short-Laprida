@@ -1,5 +1,16 @@
-import { useEffect, useState, type PropsWithChildren } from "react";
-import { getAllSCPs, type NewSCPData, type UpdateSCPData } from "../services/scpService";
+import {
+  useCallback,
+  useEffect,
+  useState,
+  type PropsWithChildren,
+} from "react";
+import {
+  createSCP as createSCPService,
+  getAllSCPs,
+  updateSCP as updateSCPService,
+  type NewSCPData,
+  type UpdateSCPData,
+} from "../services/scpService";
 import type { SCPEntity } from "../types/scp";
 
 export interface SCPContextType {
@@ -17,24 +28,75 @@ export function SCPProvider({ children }: PropsWithChildren) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const loadInitialSCPs = async (): Promise<void> => {
-      try {
-        const loadedSCPs = await getAllSCPs();
-        setScps(loadedSCPs);
-      } catch (caughtError) {
-        setError(
-          caughtError instanceof Error
-            ? caughtError.message
-            : "No se pudieron cargar los SCPs",
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
+  const reloadSCPs = useCallback(async (): Promise<void> => {
+    setLoading(true);
+    setError(null);
 
-    void loadInitialSCPs();
+    try {
+      const loadedSCPs = await getAllSCPs();
+      setScps(loadedSCPs);
+    } catch (caughtError) {
+      setError(
+        caughtError instanceof Error
+          ? caughtError.message
+          : "No se pudieron cargar los SCPs",
+      );
+    } finally {
+      setLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    void reloadSCPs();
+  }, [reloadSCPs]);
+
+  const createSCP = async (data: NewSCPData): Promise<SCPEntity> => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const createdSCP = await createSCPService(data);
+      setScps((currentSCPs) => [...currentSCPs, createdSCP]);
+      return createdSCP;
+    } catch (caughtError) {
+      const message =
+        caughtError instanceof Error
+          ? caughtError.message
+          : "No se pudo crear el SCP";
+      setError(message);
+      throw new Error(message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const updateSCP = async (
+    id: string,
+    data: UpdateSCPData,
+  ): Promise<SCPEntity> => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const updatedSCP = await updateSCPService(id, data);
+      setScps((currentSCPs) =>
+        currentSCPs.map((scp) => (scp.id === id ? updatedSCP : scp)),
+      );
+      return updatedSCP;
+    } catch (caughtError) {
+      const message =
+        caughtError instanceof Error
+          ? caughtError.message
+          : "No se pudo actualizar el SCP";
+      setError(message);
+      throw new Error(message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  void createSCP;
+  void updateSCP;
 
   return children;
 }
