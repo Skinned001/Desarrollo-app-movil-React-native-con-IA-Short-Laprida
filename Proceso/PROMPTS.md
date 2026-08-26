@@ -71,3 +71,7 @@ T02.13: Probar que el manejo de errores funciona intentando buscar (getSCPById) 
 Escribe el código de este archivo temporal y dime qué comando debo ejecutar en mi terminal para ver los resultados (por ejemplo, usando npx tsx o node). La subtarea T02.14 (eliminar el archivo) la haré yo manualmente una vez que confirme que todo funciona.
 
 T03.1:Continua con fase 3 y unicamnete as hastas el punto 3.1 y para comprobar que todo esta bien
+
+T03.2:ok ahora continuemos con la T03.2
+
+T03.3:esta todo bien continua con la T03:3
