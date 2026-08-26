@@ -10,6 +10,7 @@ import {
   createSCP as createSCPService,
   deleteSCP as deleteSCPService,
   getAllSCPs,
+  getSCPById as getSCPByIdService,
   updateSCP as updateSCPService,
   type NewSCPData,
   type UpdateSCPData,
@@ -21,6 +22,7 @@ export interface SCPContextType {
   loading: boolean;
   error: string | null;
   reloadSCPs: () => Promise<void>;
+  getSCPById: (id: string) => Promise<SCPEntity>;
   createSCP: (data: NewSCPData) => Promise<SCPEntity>;
   updateSCP: (id: string, data: UpdateSCPData) => Promise<SCPEntity>;
   deleteSCP: (id: string) => Promise<void>;
@@ -54,6 +56,10 @@ export function SCPProvider({ children }: PropsWithChildren) {
   useEffect(() => {
     void reloadSCPs();
   }, [reloadSCPs]);
+
+  const getSCPById = useCallback(async (id: string): Promise<SCPEntity> => {
+    return getSCPByIdService(id);
+  }, []);
 
   const createSCP = async (data: NewSCPData): Promise<SCPEntity> => {
     setLoading(true);
@@ -124,6 +130,7 @@ export function SCPProvider({ children }: PropsWithChildren) {
     loading,
     error,
     reloadSCPs,
+    getSCPById,
     createSCP,
     updateSCP,
     deleteSCP,

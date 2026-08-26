@@ -139,3 +139,11 @@ T05.8:bien ahora continuea con las siguiente subfase T05.8: Agregar la navegaci√
 T05.9:ok tiene que seguir la siguiente subfases T05.9: Reemplazar la tarjeta provisional en index.tsx.
 
 T05.10 y la .11 son actividad de verificacion asi que no necesitan de un prompt
+
+T06:bien ya termino entonce la fase 5 continuemos con la fase 6 la primera subfase dice T06.1: Crear app/[id].tsx.
+
+T06.2:seguimo con la siguiente subfase - T06.2: Obtener el id mediante useLocalSearchParams().
+
+T06.3:ok entonce ahora haremos la subfase T06.3: Buscar el SCP mediante getSCPById del contexto.
+
+T06.4:has ahora la subfase T06.4: Mostrar el estado de carga.
