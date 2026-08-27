@@ -274,3 +274,19 @@ T08.8: Modificar la vista para renderizar de forma condicional estos mensajes de
 Para probar esto, agrega un botón "Guardar Cambios" al final del formulario. Por ahora, el botón solo debe ejecutar la validación. Si la validación pasa, haz un console.log("Edición válida para guardar").
 
 Actualiza el código de app/edit/[id].tsx con esta lógica de validación y detente ahí. Aún no conectes la función de actualización real.
+
+# Bloque de guardado de cambios
+
+Las validaciones de la pantalla de edición funcionan correctamente. Para finalizar la Fase T08, vamos a conectar el formulario con el contexto global para que los cambios persistan.
+
+Trabajando sobre el archivo app/edit/[id].tsx y respetando el estilo del .github/copilot-instructions.md, ejecuta única y exclusivamente las siguientes subtareas:
+
+T08.9: Desde el hook useSCP, extrae la función updateSCP. Modifica la lógica del botón "Guardar Cambios": si el formulario pasa la validación, debe ejecutar updateSCP pasándole el id actual y los nuevos datos del formulario.
+
+T08.10: Maneja el estado de carga de esta operación asíncrona (ej. deshabilitando el botón) y envuelve la llamada en un try/catch. Si el servicio arroja un error, captúralo y muéstralo en la interfaz usando el estado de errores que ya tenemos.
+
+T08.11: Si updateSCP se resuelve con éxito, utiliza router.replace(\/${id}`)` de expo-router para redirigir al usuario directamente de vuelta a la pantalla de detalles de ese SCP.
+
+Nota: La subtarea T08.12 (Verificar que los cambios se reflejen) la realizaré yo manualmente probando la app.
+
+Actualiza el código integrando esta lógica final de guardado y navegación, y detente ahí.

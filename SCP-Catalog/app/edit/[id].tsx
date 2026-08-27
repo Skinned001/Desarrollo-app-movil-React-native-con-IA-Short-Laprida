@@ -1,4 +1,4 @@
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import {
   ActivityIndicator,
@@ -21,13 +21,14 @@ type FormState = {
   Description: string;
 };
 
-type FormErrors = Partial<Record<keyof FormState, string>>;
+type FormErrors = Partial<Record<keyof FormState | "submit", string>>;
 
 const classOptions: SCPClass[] = ["Safe", "Euclid", "Keter", "Thaumiel"];
 
 export default function EditScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { scps, loading, getSCPById } = useSCP();
+  const router = useRouter();
+  const { scps, loading, getSCPById, updateSCP } = useSCP();
   const [scp, setSCP] = useState<SCPEntity | null>(null);
   const [form, setForm] = useState<FormState>({
     ItemNumber: "",
@@ -69,13 +70,41 @@ export default function EditScreen() {
     return nextErrors;
   };
 
-  const handleValidate = (): void => {
+  const handleSave = async (): Promise<void> => {
     const validationErrors = validateForm();
 
-    if (Object.keys(validationErrors).length === 0) {
-      console.log("Edición válida para guardar");
+    if (Object.keys(validationErrors).length > 0 || !id) {
+      return;
+    }
+
+    setErrors({});
+    setIsSubmitting(true);
+
+    try {
+      await updateSCP(id, {
+        ItemNumber: form.ItemNumber.trim(),
+        Class: form.Class as SCPClass,
+        ContainmentProcedures: form.ContainmentProcedures.trim(),
+        Description: form.Description.trim(),
+      });
+
+      router.replace(`/${id}`);
+    } catch (caughtError) {
+      const message =
+        caughtError instanceof Error
+          ? caughtError.message
+          : "No se pudo actualizar el SCP.";
+
+      setErrors((previousErrors) => ({
+        ...previousErrors,
+        submit: message,
+      }));
+    } finally {
+      setIsSubmitting(false);
     }
   };
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (!id) {
@@ -220,8 +249,16 @@ export default function EditScreen() {
           ) : null}
         </View>
 
-        <Pressable onPress={handleValidate} style={styles.saveButton}>
-          <Text style={styles.saveButtonText}>Guardar Cambios</Text>
+        {errors.submit ? <Text style={styles.submitError}>{errors.submit}</Text> : null}
+
+        <Pressable
+          disabled={isSubmitting}
+          onPress={() => void handleSave()}
+          style={[styles.saveButton, isSubmitting && styles.saveButtonDisabled]}
+        >
+          <Text style={styles.saveButtonText}>
+            {isSubmitting ? "Guardando..." : "Guardar Cambios"}
+          </Text>
         </Pressable>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -311,6 +348,11 @@ const styles = StyleSheet.create({
     fontSize: 13,
     marginTop: 6,
   },
+  submitError: {
+    color: "#FF8C42",
+    fontSize: 14,
+    marginBottom: 12,
+  },
   saveButton: {
     alignItems: "center",
     backgroundColor: "#000000",
@@ -319,6 +361,9 @@ const styles = StyleSheet.create({
     marginTop: 4,
     paddingHorizontal: 16,
     paddingVertical: 12,
+  },
+  saveButtonDisabled: {
+    opacity: 0.6,
   },
   saveButtonText: {
     color: "#00FF00",
