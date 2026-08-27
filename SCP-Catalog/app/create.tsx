@@ -1,3 +1,4 @@
+import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
   KeyboardAvoidingView,
@@ -9,6 +10,7 @@ import {
   TextInput,
   View,
 } from "react-native";
+import { useSCP } from "../context/SCPContext";
 
 type FormState = {
   ItemNumber: string;
@@ -27,8 +29,11 @@ const initialFormState: FormState = {
 };
 
 export default function CreateScreen() {
+  const { createSCP } = useSCP();
+  const router = useRouter();
   const [form, setForm] = useState<FormState>(initialFormState);
   const [errors, setErrors] = useState<FormErrors>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const updateField = (field: keyof FormState, value: string): void => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -59,6 +64,39 @@ export default function CreateScreen() {
 
     setErrors(nextErrors);
     return nextErrors;
+  };
+
+  const handleSave = async (): Promise<void> => {
+    const validationErrors = validateForm();
+    if (Object.keys(validationErrors).length > 0) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setErrors({});
+
+    try {
+      await createSCP({
+        ItemNumber: form.ItemNumber.trim(),
+        Class: form.Class as "Safe" | "Euclid" | "Keter" | "Thaumiel",
+        ContainmentProcedures: form.ContainmentProcedures.trim(),
+        Description: form.Description.trim(),
+      });
+
+      router.back();
+    } catch (caughtError) {
+      const message =
+        caughtError instanceof Error
+          ? caughtError.message
+          : "No se pudo guardar el SCP.";
+
+      setErrors((prev) => ({
+        ...prev,
+        submit: message,
+      }));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const classOptions = ["Safe", "Euclid", "Keter", "Thaumiel"] as const;
@@ -150,6 +188,18 @@ export default function CreateScreen() {
           />
           {errors.Description ? <Text style={styles.errorText}>{errors.Description}</Text> : null}
         </View>
+
+        {errors.submit ? <Text style={styles.submitError}>{errors.submit}</Text> : null}
+
+        <Pressable
+          style={[styles.saveButton, isSubmitting && styles.saveButtonDisabled]}
+          onPress={handleSave}
+          disabled={isSubmitting}
+        >
+          <Text style={styles.saveButtonText}>
+            {isSubmitting ? "Guardando..." : "Guardar"}
+          </Text>
+        </Pressable>
       </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -236,5 +286,32 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginTop: 6,
     fontWeight: "600",
+  },
+  submitError: {
+    color: "#FF8C42",
+    fontSize: 13,
+    fontWeight: "600",
+    marginBottom: 12,
+  },
+  saveButton: {
+    backgroundColor: "#000000",
+    borderWidth: 1,
+    borderColor: "#00FF00",
+    borderRadius: 10,
+    paddingVertical: 14,
+    paddingHorizontal: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 8,
+  },
+  saveButtonDisabled: {
+    opacity: 0.6,
+  },
+  saveButtonText: {
+    color: "#00FF00",
+    fontSize: 16,
+    fontWeight: "700",
+    textTransform: "uppercase",
+    letterSpacing: 0.8,
   },
 });

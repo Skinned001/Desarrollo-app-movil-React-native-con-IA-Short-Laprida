@@ -226,3 +226,19 @@ T07.7: Crear un nuevo estado (useState) para manejar los errores del formulario.
 T07.8: Crear una función (ej. validateForm) que evalúe el estado actual. Debe verificar que los campos ItemNumber, ContainmentProcedures y Description no estén vacíos, y que se haya seleccionado una Class. Si un campo falla, debe actualizar el estado de errores.
 
 T07.9: Modificar la vista para renderizar de forma condicional los mensajes de error debajo de su respectivo campo si es que existen en el estado
+
+# Etapa final de la pantalla de creacion
+
+Para finalizar la Fase T07, vamos a conectar este formulario con nuestro contexto global para guardar el SCP.
+
+Trabajando siempre sobre app/create.tsx y respetando el copilot-instructions.md, ejecuta única y exclusivamente las siguientes subtareas:
+
+T07.10: Importa el hook useSCP desde nuestro contexto y extrae la función createSCP. Actualiza la lógica del botón "Guardar": si el formulario es válido, debe ejecutar createSCP pasándole los datos del estado.
+
+T07.11: Como createSCP es asíncrono, maneja el estado de carga (deshabilitando el botón o mostrando un texto de "Guardando...") y envuelve la llamada en un bloque try/catch. Si ocurre un error en el servicio, muéstralo en la interfaz usando el estado de errores que creamos en el paso anterior.
+
+T07.12: Importa el hook useRouter de expo-router. Si el createSCP se resuelve con éxito, ejecuta router.back() para devolver al usuario a la pantalla anterior.
+
+Nota: La subtarea T07.13 (Verificar la creación en el teléfono) la realizaré yo manualmente al finalizar.
+
+Actualiza el código integrando esta lógica final y detente.
