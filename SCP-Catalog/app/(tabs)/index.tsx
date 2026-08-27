@@ -54,6 +54,7 @@ export default function HomeScreen() {
           renderItem={({ item }) => <SCPCard scp={item} />}
         />
       )}
+
     </ThemedView>
   );
 }

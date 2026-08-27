@@ -10,7 +10,7 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { useSCP } from "../context/SCPContext";
+import { useSCP } from "../../context/SCPContext";
 
 type FormState = {
   ItemNumber: string;

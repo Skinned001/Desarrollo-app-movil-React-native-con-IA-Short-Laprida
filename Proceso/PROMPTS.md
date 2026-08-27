@@ -260,3 +260,17 @@ T08.5: Crear el estado del formulario (useState) y prellenarlo con los datos del
 Por ahora, no construyas el formulario completo. Solo renderiza una vista temporal que muestre un texto como "Editando: [ItemNumber]" para confirmar que los datos se cargaron y se guardaron en el estado correctamente.
 
 Escribe el código de este bloque inicial y detente ahí para que pueda revisarlo.
+
+# Etapa de validacion para los formularios
+
+La barra de navegación inferior funciona perfecto. Vamos a retomar el trabajo en la pantalla de edición, específicamente en el archivo app/edit/[id].tsx.
+
+Manteniendo nuestras reglas de estilo en .github/copilot-instructions.md (fondo negro, errores en color de alerta que resalte en el modo oscuro), ejecuta única y exclusivamente las siguientes subtareas:
+
+T08.7: Crear un nuevo estado para manejar los errores de validación del formulario de edición. Crear una función de validación que se asegure de que los campos ItemNumber, ContainmentProcedures y Description no estén vacíos, y que Class tenga un valor válido.
+
+T08.8: Modificar la vista para renderizar de forma condicional estos mensajes de error justo debajo de cada campo correspondiente si la validación falla.
+
+Para probar esto, agrega un botón "Guardar Cambios" al final del formulario. Por ahora, el botón solo debe ejecutar la validación. Si la validación pasa, haz un console.log("Edición válida para guardar").
+
+Actualiza el código de app/edit/[id].tsx con esta lógica de validación y detente ahí. Aún no conectes la función de actualización real.
