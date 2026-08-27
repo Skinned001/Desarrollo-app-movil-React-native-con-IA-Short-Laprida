@@ -242,3 +242,21 @@ T07.12: Importa el hook useRouter de expo-router. Si el createSCP se resuelve co
 Nota: La subtarea T07.13 (Verificar la creación en el teléfono) la realizaré yo manualmente al finalizar.
 
 Actualiza el código integrando esta lógica final y detente.
+
+# Comenzando tarea 8, pantallas de edicion
+
+Siguiendo estrictamente nuestras reglas en .github/copilot-instructions.md (fondo negro, texto verde neón), ejecuta única y exclusivamente estas subtareas:
+
+T08.1: Crear el archivo app/edit/[id].tsx.
+
+T08.2: Utilizar useLocalSearchParams() de expo-router para obtener el id de la URL.
+
+T08.3: Importar el contexto (useSCP) y buscar el SCP seleccionado utilizando el id. (Puedes usar un useEffect para esto o buscarlo directamente en el array del estado global).
+
+T08.4: Si los datos del contexto aún están cargando, muestra un estado de carga (texto o ActivityIndicator). Si el SCP no existe, muestra un mensaje de error claro.
+
+T08.5: Crear el estado del formulario (useState) y prellenarlo con los datos del SCP encontrado (ItemNumber, Class, ContainmentProcedures, Description).
+
+Por ahora, no construyas el formulario completo. Solo renderiza una vista temporal que muestre un texto como "Editando: [ItemNumber]" para confirmar que los datos se cargaron y se guardaron en el estado correctamente.
+
+Escribe el código de este bloque inicial y detente ahí para que pueda revisarlo.
