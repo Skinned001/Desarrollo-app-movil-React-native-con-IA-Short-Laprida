@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 # Primer Prompt 
+=======
+# Primer Prompt
+
+>>>>>>> 546a6e32c4c4926ebfb0a3db9a70ca5e30d006be
 Hola. Vamos a comenzar con el desarrollo del proyecto "SCP-Catalog".
 
 Antes de escribir código, por favor revisa el archivo spec.md para entender la arquitectura general, y guíate estrictamente por las convenciones, colores y reglas definidas en nuestro archivo CLAUDE.md. Todo el código debe estar pensado para ejecutarse en la app de Expo Go.
@@ -36,6 +41,10 @@ Por favor, procede a crear y modificar los archivos correspondientes.
 # Segundo Prompt
 
 ## A partir de ahora, los prompts abarcaran subtareas de forma mas controlada y fragmentda, para manejar y revisar el codigo de mejor manera.
+<<<<<<< HEAD
+=======
+
+>>>>>>> 546a6e32c4c4926ebfb0a3db9a70ca5e30d006be
 Vamos a comenzar con la Fase T02. Para asegurarme de que el código sea exacto, vamos a trabajar paso a paso.
 
 Sigue teniendo en cuenta las reglas de nuestro .github/copilot-instructions.md y la arquitectura del spec.md.
@@ -66,4 +75,86 @@ T02.12: En el mismo script, probar la creación de un nuevo SCP ficticio, luego 
 
 T02.13: Probar que el manejo de errores funciona intentando buscar (getSCPById) un ID que no exista y capturando el error (try/catch).
 
+<<<<<<< HEAD
 Escribe el código de este archivo temporal y dime qué comando debo ejecutar en mi terminal para ver los resultados (por ejemplo, usando npx tsx o node). La subtarea T02.14 (eliminar el archivo) la haré yo manualmente una vez que confirme que todo funciona.
+=======
+Escribe el código de este archivo temporal y dime qué comando debo ejecutar en mi terminal para ver los resultados (por ejemplo, usando npx tsx o node). La subtarea T02.14 (eliminar el archivo) la haré yo manualmente una vez que confirme que todo funciona.
+
+T03.1:Continua con fase 3 y unicamnete as hastas el punto 3.1 y para comprobar que todo esta bien
+
+T03.2:ok ahora continuemos con la T03.2
+
+T03.3:esta todo bien continua con la T03:3
+
+T03.4:continua ahora con la subfase T03.4
+
+T03.5:continuemos con T03.5:Implementar la carga inicial.
+
+T03.6:bien parece esta todo en orden continuemos con la subface T03.6
+
+T03.7:ahora continuemos con la siguiente sub face -T03.7: Implementar createSCP.
+
+T03.8:continuemos con la siguiente el T03.8: Implementar updateSCP.
+
+T03.9:Continuemos con la subface T03.9
+
+T03.10:ok todo parece esta bien ahora continuemos con la subface T03.10: Exportar SCPProvider y useSCP
+
+T03.11:ahora realiza la subface T03.11: Envolver la aplicación con SCPProvider en app/\_layout.tsx. ademas otra cosa que quiero que haga durante todo este proceso que estamos haciendo de realizar las face es que expliques que esta haciendo
+
+T03.12:bien ahora debes de hacer la siguiente subface la T03.12: Crear una pantalla temporal de prueba.
+
+T03.13:ahora hagamos la siguiente subface T03.13: Mostrar los SCPs desde el contexto.
+
+T03.14:bien ahora queda la ultima subface,realiza la T03.14
+
+T04:bien parece que esta todo correcto ahora vamos con la siguiente face la 4 manteniendo todo las reglas que estuvimos haciendo con la 3
+
+las subfase T04.1,2,3 ya fueron creada tras la instalacion de expo go por eso no son mensionado en este archivo
+
+T04.4:ok bien realiza la subfase T04.4
+
+T04.5:bien ahora continuemos con la siguiente subface la T04.5 Agregar el indicador de carga.
+
+T04.6:todo esta bien,realiza la subface T04.6
+
+T04.7:para la siguiente subface T04.7 puedes ademas de añadir el error añadir un boton que permita mostrar una lista vacia para validar el mensaje de la anterio subface
+
+T04.8:Bien ahora continuemos con la subface - T04.8: Agregar el botón de reintento.
+
+T04.9:Bien continuemos ahora con la Subface T04.9: Agregar la FlatList.
+
+T04.10:continua ahora con subfase T04.10
+
+T04.11:ok entiendo ahora bien entonce esta bien ahora realiza la siguiente subface - T04.11 Mostrar ItemNumber, Class y un extracto de los primeros 100 caracteres de Description.
+
+T04.12:continuemos con la ultima subfase la T04.12
+
+T05:bien vamos a continuar ahora con la fase T05: Componente SCPCard
+
+T05.2:ok entonce vamos por la siguiente la subfase T05.2
+
+T05.3:bien continuemos con la subfase T05.3: Definir las propiedades del componente.
+
+T05.4:bien ademas de continuar la siguiente fase -T05.4: Mostrar el número de ítem, quiero que saque las funciones que utilizamos de prueba en la anterio fase
+
+T05.5:ok entonces continuemos con la subfase - T05.5: Mostrar la clase.
+
+T05.6:continua ahora con la subfase T05.6: Crear el color correspondiente a cada clase
+
+T05.7:me equivo esta subfase debe de hacer primero T05.7: Mostrar los primeros 100 caracteres de la descripción.
+
+T05.8:bien ahora continuea con las siguiente subfase T05.8: Agregar la navegación con router.push()
+
+T05.9:ok tiene que seguir la siguiente subfases T05.9: Reemplazar la tarjeta provisional en index.tsx.
+
+T05.10 y la .11 son actividad de verificacion asi que no necesitan de un prompt
+
+T06:bien ya termino entonce la fase 5 continuemos con la fase 6 la primera subfase dice T06.1: Crear app/[id].tsx.
+
+T06.2:seguimo con la siguiente subfase - T06.2: Obtener el id mediante useLocalSearchParams().
+
+T06.3:ok entonce ahora haremos la subfase T06.3: Buscar el SCP mediante getSCPById del contexto.
+
+T06.4:has ahora la subfase T06.4: Mostrar el estado de carga.
+>>>>>>> 546a6e32c4c4926ebfb0a3db9a70ca5e30d006be
