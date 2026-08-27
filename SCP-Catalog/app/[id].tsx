@@ -1,6 +1,6 @@
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import type { SCPEntity, SCPClass } from "../types/scp";
 import { useSCP } from "../context/SCPContext";
 
@@ -111,6 +111,13 @@ export default function DetailScreen() {
         <Text style={styles.sectionTitle}>Descripción</Text>
         <Text style={styles.sectionText}>{scp.Description}</Text>
       </View>
+
+      <Pressable
+        style={styles.editButton}
+        onPress={() => router.push(`/edit/${id}`)}
+      >
+        <Text style={styles.editButtonText}>Editar</Text>
+      </Pressable>
     </ScrollView>
   );
 }
@@ -179,5 +186,22 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 24,
     textAlign: "left",
+  },
+  editButton: {
+    marginTop: 16,
+    alignSelf: "flex-start",
+    backgroundColor: "#000000",
+    borderWidth: 1,
+    borderColor: "#00FF00",
+    borderRadius: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+  },
+  editButtonText: {
+    color: "#00FF00",
+    fontSize: 16,
+    fontWeight: "700",
+    letterSpacing: 1,
+    textTransform: "uppercase",
   },
 });

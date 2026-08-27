@@ -182,3 +182,47 @@ T06.9: Mostrar la sección de Description. Al igual que el punto anterior, agré
 Nota: Como estos campos pueden contener mucho texto, asegúrate de que el contenedor principal de la pantalla sea un ScrollView si aún no lo es.
 
 Actualiza el código del componente con estas dos secciones y detente ahí para que pueda probar la lectura en el dispositivo.
+
+# Comenzando con la tarea 7
+
+Vamos a comenzar con la Fase T07 (Pantalla de creación). Como los formularios pueden ser complejos, vamos a construirlo paso a paso.
+
+Siguiendo estrictamente nuestras reglas de estilo en .github/copilot-instructions.md (fondo negro, texto verde neón, StyleSheet y componentes funcionales), ejecuta única y exclusivamente estas subtareas:
+
+T07.1: Crear el archivo app/create.tsx.
+
+T07.2: Crear el estado inicial del formulario usando useState. (Puede ser un objeto que contenga los campos ItemNumber, Class, ContainmentProcedures y Description, o estados separados, lo que consideres más limpio).
+
+T07.3: Renderizar el campo ItemNumber. Debe ser un TextInput con estilo de terminal, con un texto tipo label arriba que diga "Número de Ítem (ej. SCP-173)".
+
+Nota: Asegúrate de envolver la vista principal en un KeyboardAvoidingView y ScrollView para que el teclado no tape el formulario más adelante.
+
+Escribe el código de este archivo con estas configuraciones iniciales y detente ahí para que pueda revisarlo.
+
+# Siguiente set de pasos
+
+Vamos a seguir agregando los campos visuales al formulario en app/create.tsx.
+
+Manteniendo nuestras reglas de estilo en .github/copilot-instructions.md (fondo negro, texto/bordes verde neón), ejecuta única y exclusivamente las siguientes subtareas:
+
+T07.4: Crear el selector de Class. Como no queremos añadir dependencias extra, implementa esto como un grupo de 4 botones (chips) usando Pressable o TouchableOpacity para las opciones: Safe, Euclid, Keter y Thaumiel. El botón seleccionado debe cambiar de estilo (por ejemplo, fondo verde neón y texto negro) para indicar que está activo.
+
+T07.5: Crear el campo ContainmentProcedures. Debe ser un TextInput con la propiedad multiline={true} y un alto mínimo para que el usuario pueda escribir varios párrafos. Añade su respectivo label.
+
+T07.6: Crear el campo Description. Igual que el anterior, un TextInput multilínea con su label.
+
+Actualiza el código de la vista y los estilos (StyleSheet) para incluir estos tres elementos y detente ahí. Aún no agregues la lógica de guardado ni las validaciones de error.
+
+# Ya implementado el formulario de creacion, procedemos a crear los mensajes de validacion y errores
+
+La interfaz del formulario y los campos multilínea funcionan perfecto. Ahora, trabajando sobre el mismo archivo app/create.tsx, vamos a implementar la lógica de validación visual antes de conectarlo con el estado global.
+
+Mantén las reglas de estilo de .github/copilot-instructions.md. Para los textos de error, utiliza un color que resalte adecuadamente en el fondo negro (por ejemplo, rojo o un naranja/amarillo de alerta).
+
+Ejecuta única y exclusivamente las siguientes subtareas:
+
+T07.7: Crear un nuevo estado (useState) para manejar los errores del formulario. Puede ser un objeto que guarde el mensaje de error específico para cada campo.
+
+T07.8: Crear una función (ej. validateForm) que evalúe el estado actual. Debe verificar que los campos ItemNumber, ContainmentProcedures y Description no estén vacíos, y que se haya seleccionado una Class. Si un campo falla, debe actualizar el estado de errores.
+
+T07.9: Modificar la vista para renderizar de forma condicional los mensajes de error debajo de su respectivo campo si es que existen en el estado
