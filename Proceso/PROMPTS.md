@@ -75,9 +75,6 @@ T02.12: En el mismo script, probar la creación de un nuevo SCP ficticio, luego 
 
 T02.13: Probar que el manejo de errores funciona intentando buscar (getSCPById) un ID que no exista y capturando el error (try/catch).
 
-<<<<<<< HEAD
-Escribe el código de este archivo temporal y dime qué comando debo ejecutar en mi terminal para ver los resultados (por ejemplo, usando npx tsx o node). La subtarea T02.14 (eliminar el archivo) la haré yo manualmente una vez que confirme que todo funciona.
-=======
 Escribe el código de este archivo temporal y dime qué comando debo ejecutar en mi terminal para ver los resultados (por ejemplo, usando npx tsx o node). La subtarea T02.14 (eliminar el archivo) la haré yo manualmente una vez que confirme que todo funciona.
 
 T03.1:Continua con fase 3 y unicamnete as hastas el punto 3.1 y para comprobar que todo esta bien
@@ -157,4 +154,31 @@ T06.2:seguimo con la siguiente subfase - T06.2: Obtener el id mediante useLocalS
 T06.3:ok entonce ahora haremos la subfase T06.3: Buscar el SCP mediante getSCPById del contexto.
 
 T06.4:has ahora la subfase T06.4: Mostrar el estado de carga.
->>>>>>> 546a6e32c4c4926ebfb0a3db9a70ca5e30d006be
+
+# Siguiente set de promps para terminar el proyecto
+
+Manteniendo estrictamente las reglas de nuestro .github/copilot-instructions.md (fondo negro, texto verde neón), ejecuta única y exclusivamente estas subtareas sobre ese archivo:
+
+T06.5: Mostrar un mensaje claro de "SCP no encontrado" en caso de que la búsqueda no retorne datos.
+
+T06.6: Mostrar el ItemNumber en la parte superior como título principal (tamaño grande).
+
+T06.7: Mostrar la Class justo debajo, utilizando un badge (un contenedor con fondo o borde de color específico según sea Safe, Euclid, Keter o Thaumiel).
+
+Escribe el código necesario para integrar solo estos tres elementos visuales. Asegúrate de usar StyleSheet.create para los estilos. Muestra cómo queda el componente y detente ahí para que pueda revisarlo.
+
+# Ya verificado
+
+El encabezado y los mensajes de estado se ven perfectos. Sigamos trabajando sobre el mismo archivo app/[id].tsx.
+
+Ahora quiero que agregues el contenido principal del SCP, manteniendo nuestras reglas de estilo (.github/copilot-instructions.md): fondo negro, texto verde neón y uso de StyleSheet.
+
+Ejecuta única y exclusivamente las siguientes subtareas:
+
+T06.8: Mostrar la sección de ContainmentProcedures. Asegúrate de ponerle un subtítulo claro (ej. "Procedimientos de Contención") y un margen/espaciado adecuado para que el texto largo sea legible.
+
+T06.9: Mostrar la sección de Description. Al igual que el punto anterior, agrégale su subtítulo (ej. "Descripción") y buena separación del bloque anterior.
+
+Nota: Como estos campos pueden contener mucho texto, asegúrate de que el contenedor principal de la pantalla sea un ScrollView si aún no lo es.
+
+Actualiza el código del componente con estas dos secciones y detente ahí para que pueda probar la lectura en el dispositivo.
