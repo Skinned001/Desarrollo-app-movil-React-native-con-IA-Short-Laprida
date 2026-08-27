@@ -1,4 +1,4 @@
-import { router, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import type { SCPEntity, SCPClass } from "../types/scp";
@@ -45,6 +45,7 @@ const classBadgeStyles = StyleSheet.create({
 
 export default function DetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
+  const router = useRouter();
   const { getSCPById } = useSCP();
   const [scp, setSCP] = useState<SCPEntity | null>(null);
   const [loadingDetail, setLoadingDetail] = useState(true);
@@ -93,6 +94,10 @@ export default function DetailScreen() {
       showsVerticalScrollIndicator={false}
     >
       <View style={styles.headerBlock}>
+        <Pressable onPress={() => router.back()} style={styles.backButton}>
+          <Text style={styles.backButtonText}>Volver</Text>
+        </Pressable>
+
         <Text style={styles.itemNumber}>{scp.ItemNumber}</Text>
 
         <View style={[styles.badgeWrapper, classBadgeStyles[scp.Class as SCPClass]]}>
@@ -155,6 +160,21 @@ const styles = StyleSheet.create({
   },
   headerBlock: {
     marginBottom: 28,
+  },
+  backButton: {
+    alignSelf: "flex-start",
+    backgroundColor: "#000000",
+    borderColor: "#00FF00",
+    borderRadius: 5,
+    borderWidth: 1,
+    marginBottom: 20,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+  },
+  backButtonText: {
+    color: "#00FF00",
+    fontSize: 15,
+    fontWeight: "700",
   },
   itemNumber: {
     color: "#00FF00",
