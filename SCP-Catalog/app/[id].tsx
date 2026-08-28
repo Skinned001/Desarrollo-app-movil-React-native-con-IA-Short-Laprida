@@ -1,6 +1,13 @@
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import type { SCPEntity, SCPClass } from "../types/scp";
 import { useSCP } from "../context/SCPContext";
 
@@ -46,9 +53,41 @@ const classBadgeStyles = StyleSheet.create({
 export default function DetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
-  const { getSCPById } = useSCP();
+  const { deleteSCP, getSCPById } = useSCP();
   const [scp, setSCP] = useState<SCPEntity | null>(null);
   const [loadingDetail, setLoadingDetail] = useState(true);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] =
+    useState(false);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
+
+  const handleDelete = (): void => {
+    if (!id || isDeleting) {
+      return;
+    }
+
+    setDeleteError(null);
+    setIsDeleteConfirmationVisible(true);
+  };
+
+  const confirmDelete = (): void => {
+    if (!id || isDeleting) {
+      return;
+    }
+
+    setIsDeleting(true);
+    void deleteSCP(id)
+      .then(() => router.replace("/"))
+      .catch((caughtError) => {
+        setDeleteError(
+          caughtError instanceof Error
+            ? caughtError.message
+            : "No se pudo eliminar el SCP",
+        );
+        setIsDeleting(false);
+        setIsDeleteConfirmationVisible(false);
+      });
+  };
 
   useEffect(() => {
     if (!id) {
@@ -120,9 +159,50 @@ export default function DetailScreen() {
       <Pressable
         style={styles.editButton}
         onPress={() => router.push(`/edit/${id}`)}
+        disabled={isDeleting}
       >
         <Text style={styles.editButtonText}>Editar</Text>
       </Pressable>
+
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel="Eliminar SCP"
+        style={[styles.deleteButton, isDeleting && styles.deleteButtonDisabled]}
+        onPress={handleDelete}
+        disabled={isDeleting}
+      >
+        <Text style={styles.deleteButtonText}>
+          {isDeleting ? "Eliminando..." : "Eliminar SCP"}
+        </Text>
+      </Pressable>
+
+      {isDeleteConfirmationVisible && (
+        <View style={styles.confirmationBlock}>
+          <Text style={styles.confirmationText}>
+            ¿Seguro que deseas eliminar {scp.ItemNumber}?
+          </Text>
+          <View style={styles.confirmationActions}>
+            <Pressable
+              accessibilityRole="button"
+              onPress={() => setIsDeleteConfirmationVisible(false)}
+              style={styles.cancelButton}
+              disabled={isDeleting}
+            >
+              <Text style={styles.cancelButtonText}>Cancelar</Text>
+            </Pressable>
+            <Pressable
+              accessibilityRole="button"
+              onPress={confirmDelete}
+              style={styles.confirmButton}
+              disabled={isDeleting}
+            >
+              <Text style={styles.confirmButtonText}>Confirmar eliminación</Text>
+            </Pressable>
+          </View>
+        </View>
+      )}
+
+      {deleteError && <Text style={styles.deleteError}>{deleteError}</Text>}
     </ScrollView>
   );
 }
@@ -223,5 +303,64 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     letterSpacing: 1,
     textTransform: "uppercase",
+  },
+  deleteButton: {
+    alignSelf: "flex-start",
+    borderColor: "#FF4D4D",
+    borderRadius: 10,
+    borderWidth: 1,
+    marginTop: 12,
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+  },
+  deleteButtonDisabled: {
+    opacity: 0.6,
+  },
+  deleteButtonText: {
+    color: "#FF4D4D",
+    fontSize: 16,
+    fontWeight: "700",
+    letterSpacing: 1,
+    textTransform: "uppercase",
+  },
+  confirmationBlock: {
+    borderColor: "#FF4D4D",
+    borderWidth: 1,
+    marginTop: 16,
+    padding: 16,
+  },
+  confirmationText: {
+    color: "#FFFFFF",
+    fontSize: 15,
+    marginBottom: 14,
+  },
+  confirmationActions: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
+  },
+  cancelButton: {
+    borderColor: "#99FF99",
+    borderWidth: 1,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+  },
+  cancelButtonText: {
+    color: "#99FF99",
+    fontWeight: "700",
+  },
+  confirmButton: {
+    backgroundColor: "#FF4D4D",
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+  },
+  confirmButtonText: {
+    color: "#000000",
+    fontWeight: "700",
+  },
+  deleteError: {
+    color: "#FF4D4D",
+    fontSize: 14,
+    marginTop: 12,
   },
 });

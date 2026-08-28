@@ -41,10 +41,6 @@ Por favor, procede a crear y modificar los archivos correspondientes.
 # Segundo Prompt
 
 ## A partir de ahora, los prompts abarcaran subtareas de forma mas controlada y fragmentda, para manejar y revisar el codigo de mejor manera.
-<<<<<<< HEAD
-=======
-
->>>>>>> 546a6e32c4c4926ebfb0a3db9a70ca5e30d006be
 Vamos a comenzar con la Fase T02. Para asegurarme de que el código sea exacto, vamos a trabajar paso a paso.
 
 Sigue teniendo en cuenta las reglas de nuestro .github/copilot-instructions.md y la arquitectura del spec.md.
@@ -290,3 +286,7 @@ T08.11: Si updateSCP se resuelve con éxito, utiliza router.replace(\/${id}`)` d
 Nota: La subtarea T08.12 (Verificar que los cambios se reflejen) la realizaré yo manualmente probando la app.
 
 Actualiza el código integrando esta lógica final de guardado y navegación, y detente ahí.
+
+# Etapa de revision y finalizacion
+
+Para finalizar el desarrollo, quiero que saques la flecha default para regresar a la pantalla anterior [id], y ademas, quiero que agregues la funcion de eliminar un SCP al entrar a inspeccionar el mismo.

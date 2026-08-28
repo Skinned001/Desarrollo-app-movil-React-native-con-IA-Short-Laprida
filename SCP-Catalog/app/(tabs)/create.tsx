@@ -19,7 +19,7 @@ type FormState = {
   Description: string;
 };
 
-type FormErrors = Partial<Record<keyof FormState, string>>;
+type FormErrors = Partial<Record<keyof FormState | "submit", string>>;
 
 const initialFormState: FormState = {
   ItemNumber: "",
