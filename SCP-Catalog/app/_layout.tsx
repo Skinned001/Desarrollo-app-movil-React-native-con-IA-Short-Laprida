@@ -23,6 +23,7 @@ export default function RootLayout() {
         <Stack initialRouteName="(tabs)">
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="[id]" options={{ headerShown: false }} />
+          <Stack.Screen name="edit/[id]" options={{ headerShown: false }} />
           <Stack.Screen
             name="modal"
             options={{ presentation: "modal", title: "Modal" }}

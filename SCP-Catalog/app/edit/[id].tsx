@@ -25,6 +25,20 @@ type FormErrors = Partial<Record<keyof FormState | "submit", string>>;
 
 const classOptions: SCPClass[] = ["Safe", "Euclid", "Keter", "Thaumiel"];
 
+const classChipStyles = StyleSheet.create({
+  Safe: { backgroundColor: "#081A10", borderColor: "#7CFF8A" },
+  Euclid: { backgroundColor: "#1F1A00", borderColor: "#FFD166" },
+  Keter: { backgroundColor: "#220808", borderColor: "#FF4D4D" },
+  Thaumiel: { backgroundColor: "#180C2C", borderColor: "#C084FC" },
+});
+
+const classChipTextStyles = StyleSheet.create({
+  Safe: { color: "#7CFF8A" },
+  Euclid: { color: "#FFD166" },
+  Keter: { color: "#FF4D4D" },
+  Thaumiel: { color: "#C084FC" },
+});
+
 export default function EditScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
@@ -42,7 +56,10 @@ export default function EditScreen() {
     setForm((previousForm) => ({ ...previousForm, [field]: value }));
 
     if (errors[field]) {
-      setErrors((previousErrors) => ({ ...previousErrors, [field]: undefined }));
+      setErrors((previousErrors) => ({
+        ...previousErrors,
+        [field]: undefined,
+      }));
     }
   };
 
@@ -169,6 +186,10 @@ export default function EditScreen() {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
+        <Pressable onPress={() => router.back()} style={styles.backButton}>
+          <Text style={styles.backButtonText}>Volver</Text>
+        </Pressable>
+
         <Text style={styles.title}>Editando: {scp.ItemNumber}</Text>
 
         <View style={styles.fieldGroup}>
@@ -197,10 +218,18 @@ export default function EditScreen() {
                 <Pressable
                   key={option}
                   onPress={() => updateField("Class", option)}
-                  style={[styles.chip, isSelected && styles.chipSelected]}
+                  style={[
+                    styles.chip,
+                    classChipStyles[option],
+                    isSelected && styles.chipSelected,
+                  ]}
                 >
                   <Text
-                    style={[styles.chipText, isSelected && styles.chipTextSelected]}
+                    style={[
+                      styles.chipText,
+                      classChipTextStyles[option],
+                      isSelected && styles.chipTextSelected,
+                    ]}
                   >
                     {option}
                   </Text>
@@ -208,7 +237,9 @@ export default function EditScreen() {
               );
             })}
           </View>
-          {errors.Class ? <Text style={styles.errorText}>{errors.Class}</Text> : null}
+          {errors.Class ? (
+            <Text style={styles.errorText}>{errors.Class}</Text>
+          ) : null}
         </View>
 
         <View style={styles.fieldGroup}>
@@ -216,7 +247,9 @@ export default function EditScreen() {
           <TextInput
             multiline
             numberOfLines={6}
-            onChangeText={(value) => updateField("ContainmentProcedures", value)}
+            onChangeText={(value) =>
+              updateField("ContainmentProcedures", value)
+            }
             placeholder="Describa los procedimientos..."
             placeholderTextColor="#6BFF8A"
             style={[
@@ -240,7 +273,11 @@ export default function EditScreen() {
             onChangeText={(value) => updateField("Description", value)}
             placeholder="Describa la entidad..."
             placeholderTextColor="#6BFF8A"
-            style={[styles.input, styles.textArea, errors.Description ? styles.inputError : null]}
+            style={[
+              styles.input,
+              styles.textArea,
+              errors.Description ? styles.inputError : null,
+            ]}
             textAlignVertical="top"
             value={form.Description}
           />
@@ -249,7 +286,9 @@ export default function EditScreen() {
           ) : null}
         </View>
 
-        {errors.submit ? <Text style={styles.submitError}>{errors.submit}</Text> : null}
+        {errors.submit ? (
+          <Text style={styles.submitError}>{errors.submit}</Text>
+        ) : null}
 
         <Pressable
           disabled={isSubmitting}
@@ -279,6 +318,19 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: "700",
     textAlign: "center",
+  },
+  backButton: {
+    alignSelf: "flex-start",
+    borderColor: "#00FF00",
+    borderWidth: 1,
+    marginBottom: 20,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+  },
+  backButtonText: {
+    color: "#00FF00",
+    fontSize: 15,
+    fontWeight: "700",
   },
   subtitle: {
     color: "#00FF00",
@@ -325,7 +377,6 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   chip: {
-    borderColor: "#00FF00",
     borderRadius: 999,
     borderWidth: 1,
     paddingHorizontal: 12,
@@ -333,9 +384,9 @@ const styles = StyleSheet.create({
   },
   chipSelected: {
     backgroundColor: "#00FF00",
+    borderColor: "#00FF00",
   },
   chipText: {
-    color: "#00FF00",
     fontSize: 12,
     fontWeight: "700",
     textTransform: "uppercase",
