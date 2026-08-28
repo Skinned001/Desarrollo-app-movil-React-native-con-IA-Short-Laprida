@@ -4,3 +4,5 @@ Cambiar los colores de la pantall para que se vea mas forma y menos algo como un
 como puede ser fondo blanco y letras negras o un blanco mas oscuro con letras rojas
 
 Añadir en la pantalla una funcio de filtros que muestra los scp de acuerdo a su clase ademas en este diltro tiene una descricion de que significa esas clase
+
+limpiar todas las carpetas que fueron generadas por expo y no son utilizadas
