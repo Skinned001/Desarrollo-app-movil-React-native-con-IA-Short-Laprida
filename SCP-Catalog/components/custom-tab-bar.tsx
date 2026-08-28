@@ -2,16 +2,22 @@ import { MaterialIcons } from "@expo/vector-icons";
 import type { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { LinearGradient } from "expo-linear-gradient";
 import { Pressable, StyleSheet, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const visibleTabs = ["index", "create"] as const;
 
-export function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
+export function CustomTabBar({
+  state,
+  descriptors,
+  navigation,
+}: BottomTabBarProps) {
+  const insets = useSafeAreaInsets();
   const routes = state.routes.filter((route) =>
     visibleTabs.includes(route.name as (typeof visibleTabs)[number]),
   );
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { paddingBottom: 8 + insets.bottom }]}>
       {routes.map((route) => {
         const { options } = descriptors[route.key];
         const isFocused = state.routes[state.index]?.key === route.key;
